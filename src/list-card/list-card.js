@@ -5,7 +5,7 @@ import CardItem from "../card";
 const ListCard = ({ cardInfo, getIdBook }) => (
   <List>
     {cardInfo.map((books, i) => (
-      <List.Item>
+      <List.Item key={books.isbn13} >
         <CardItem
           key={books.isbn13}
           name={books.title}

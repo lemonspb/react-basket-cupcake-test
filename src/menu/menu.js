@@ -7,15 +7,15 @@ const MenuBasket = ({ basketCounter }) => (
     <Menu.Item position="left">
       <Link to="/">
         <Header>
-          Book shop <Icon name="book" />{" "}
+          Book shop <Icon name="book" />
         </Header>
       </Link>
     </Menu.Item>
     <Menu.Item position="right">
       <Label>
-        <Link to="/basket/">
+        <Link to="/basket/" className='basket-link'>
           <Icon name="shop" />
-          <span className="counter">{basketCounter} </span>
+          <span className="counter">{basketCounter!==0?basketCounter:null} </span>
         </Link>
       </Label>
     </Menu.Item>

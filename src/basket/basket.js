@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React  from "react";
 import { Button, Table } from "semantic-ui-react";
 
 const Basket = ({ removeBasketItem, basketItem }) => {
+
+
   return (
     <Table celled>
       <Table.Header>
@@ -19,7 +21,7 @@ const Basket = ({ removeBasketItem, basketItem }) => {
             <Table.Cell>{price}&#36;</Table.Cell>
             <Table.Cell>{count}</Table.Cell>
             <Table.Cell>
-              <Button
+              <Button color='red'
                 onClick={() => {
                   removeBasketItem(id);
                 }}
