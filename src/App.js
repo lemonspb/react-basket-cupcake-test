@@ -8,10 +8,10 @@ import MenuBasket from "./menu";
 import ListCard from "./list-card";
 
 function App() {
-
   let itemStorage = JSON.parse(localStorage.getItem("storageBasket")) || {};
   const [cardInfoDetailed, setCardInfoDetailed] = useState([]);
   const [cardInfo, setCardInfo] = useState([]);
+  const [totalSum, setTotalSum] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoaing] = useState(true);
   const [basketItem, setBasketItem] = useState(itemStorage);
@@ -20,15 +20,22 @@ function App() {
   );
 
   useEffect(() => {
- 
+
     getCartInfo();
-    
-  },[cardInfo]);
+  }, [cardInfo]);
+
+  
+
 
   useEffect(() => {
+    AddTotalSum()
     localStorage.setItem("storageBasket", JSON.stringify(basketItem));
     setBasketCounter(Object.getOwnPropertyNames(basketItem).length);
   }, [basketItem]);
+
+
+
+
 
   const getCartInfo = () => {
     const BASE_URL = `https://5d22b7fd4e05c600146ef4dd.mockapi.io/cupcake/books`;
@@ -49,9 +56,22 @@ function App() {
   }
 
   function addToBasket(id, name, price, count) {
+    const item = { name, price, count, id };
+    if (basketItem[id]) {
+      item.price+= basketItem[id].price;
+      item.count += basketItem[id].count;
+    }
+    basketItem[id] = item;
+    setBasketItem({ ...basketItem });
 
-    setBasketItem({ ...basketItem, [id]: { name, price, count, id } });
   }
+
+  function AddTotalSum(){
+   setTotalSum(Object.values(basketItem).map(({price})=> price).reduce((x, y) => x + y, 0))
+  }
+
+
+
 
   function closeModal(bool) {
     setOpenModal(bool);
@@ -86,6 +106,7 @@ function App() {
             exact
             render={() => (
               <Basket
+                totalSum={totalSum}
                 removeBasketItem={removeBasketItem}
                 basketItem={basketItem}
               />
